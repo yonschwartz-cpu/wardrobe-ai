@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111111">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Wardrobe AI">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <title>WARDROBE AI</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="wordmark" href="#" aria-label="Wardrobe AI home">WARDROBE<span>AI</span></a>
+      <div class="top-actions">
+        <span class="live-dot"></span><span class="small-muted">YOUR PERSONAL STYLIST</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="today" class="page active">
+        <div class="eyebrow" id="today-date">YOUR DAILY EDIT</div>
+        <div class="hero-heading">
+          <div><h1>Get dressed.<br><em>With intention.</em></h1><p class="muted">A better outfit starts with what you own.</p></div>
+          <div class="weather-icon" id="weather-icon">☀</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-main"><div><div class="temperature" id="temperature">--°</div><div id="weather-condition" class="weather-label">Getting local forecast…</div></div><div class="weather-place" id="weather-place">LOCAL WEATHER</div></div>
+          <div class="weather-meta"><span id="feels-like">Feels like --°</span><span id="wind">Wind -- mph</span><span id="rain">Rain --%</span></div>
+          <button class="text-button" id="refresh-weather">↻ Refresh weather</button>
+        </div>
+        <div class="section-head"><div><div class="eyebrow">THE DAILY LOOK</div><h2>Today's outfit</h2></div><span class="pill">AI-READY STYLIST</span></div>
+        <div id="today-outfit" class="outfit-panel empty-state"><div class="hanger">♧</div><h3>Your wardrobe, thoughtfully styled.</h3><p>Add your clothes, choose a mode, and generate your first outfit.</p><button class="primary-button" data-go="stylist">Build an outfit <span>→</span></button></div>
+        <div class="stats-grid">
+          <div class="stat"><strong id="stat-items">0</strong><span>WARDROBE ITEMS</span></div>
+          <div class="stat"><strong id="stat-favorites">0</strong><span>FAVORITES</span></div>
+          <div class="stat"><strong id="stat-looks">0</strong><span>LOOKS CREATED</span></div>
+        </div>
+      </section>
+
+      <section id="closet" class="page">
+        <div class="eyebrow">YOUR PERSONAL COLLECTION</div>
+        <div class="page-title-row"><div><h1>My closet</h1><p class="muted">Every piece. One considered wardrobe.</p></div><button class="primary-button compact" id="add-item-open">＋ Add item</button></div>
+        <input id="closet-search" class="search" placeholder="Search by item, color or brand">
+        <div id="category-filters" class="chips"></div>
+        <div id="closet-grid" class="closet-grid"></div>
+      </section>
+
+      <section id="stylist" class="page">
+        <div class="eyebrow">PERSONAL OUTFIT CURATION</div>
+        <h1>The stylist.</h1><p class="muted">A complete look, composed from your own wardrobe.</p>
+        <div class="mode-list" id="mode-list"></div>
+        <div class="rotation-card"><div><strong>Outfit rotation</strong><p class="muted">Avoid recently worn pieces.</p></div><select id="rotation-days"><option value="3">3 days</option><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select></div>
+        <button class="primary-button full" id="generate-outfit">✦ Generate my outfit <span>→</span></button>
+        <div id="stylist-result"></div>
+      </section>
+
+      <section id="history" class="page">
+        <div class="eyebrow">YOUR STYLE, OVER TIME</div><h1>Outfit history.</h1><p class="muted">A record of what you've worn and what you loved.</p>
+        <div id="history-list" class="history-list"></div>
+      </section>
+
+      <section id="shop" class="page">
+        <div class="eyebrow">A MORE CONSIDERED WARDROBE</div><h1>Discover your next piece.</h1>
+        <p class="muted">Your stylist can identify gaps and recommend pieces that work with the clothes you already love.</p>
+        <div class="recommend-card"><div class="recommend-mark">✳</div><h3>Recommendations are coming into focus.</h3><p>Add favorites and rate outfits. The stylist will use your preferences to identify useful additions rather than suggesting random trends.</p></div>
+        <div class="recommend-card"><h3>Your wardrobe insights</h3><div id="wardrobe-insights" class="insights">Add a few pieces to start seeing wardrobe insights.</div></div>
+      </section>
+    </main>
+
+    <nav class="tabbar">
+      <button class="tab active" data-tab="today"><span>⌂</span>Today</button>
+      <button class="tab" data-tab="closet"><span>▦</span>Closet</button>
+      <button class="tab" data-tab="stylist"><span>✧</span>Stylist</button>
+      <button class="tab" data-tab="history"><span>◷</span>History</button>
+      <button class="tab" data-tab="shop"><span>◇</span>Discover</button>
+    </nav>
+  </div>
+
+  <dialog id="item-dialog">
+    <form id="item-form" method="dialog">
+      <div class="dialog-head"><div><div class="eyebrow">ADD A PIECE</div><h2>New to your closet.</h2></div><button type="button" class="close-button" id="close-dialog">×</button></div>
+      <label>Item name<input name="name" required placeholder="e.g. Navy merino quarter-zip"></label>
+      <div class="form-row"><label>Category<select name="category" required><option>Shirts</option><option>Pants</option><option>Sweaters</option><option>Jackets</option><option>Coats</option><option>Shoes</option><option>Suits</option><option>Ties</option><option>Accessories</option></select></label><label>Color<input name="color" required placeholder="Navy"></label></div>
+      <div class="form-row"><label>Brand<input name="brand" placeholder="Optional"></label><label>Warmth<select name="warmth"><option value="1">Lightweight</option><option value="2" selected>Medium</option><option value="3">Warm</option><option value="4">Very warm</option></select></label></div>
+      <label>Material / composition<input name="material" placeholder="e.g. 100% merino wool"></label>
+      <label>Weight / thickness<input name="weight" placeholder="e.g. heavyweight knit"></label>
+      <label>Product link<input name="url" type="url" placeholder="https://…"></label>
+      <label>Photo<input name="photo" type="file" accept="image/*"></label>
+      <label class="favorite-label"><input name="favorite" type="checkbox"> Mark as a favorite</label>
+      <p class="form-note">Product-link analysis and AI image recognition require the secure AI service connection. For now, add material and warmth here so weather-based styling can use them.</p>
+      <button class="primary-button full" type="submit">Save to my closet</button>
+    </form>
+  </dialog>
+  <script src="/app.js"></script>
+  <script>if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));</script>
+</body>
+</html>
